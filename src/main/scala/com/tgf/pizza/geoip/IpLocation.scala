@@ -10,10 +10,10 @@
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the Apache License Version 2.0 for the specific language governing permissions and limitations there under.
  */
-package com.sanoma.cda.geoip
+package com.tgf.pizza.geoip
 
 import com.maxmind.geoip2.model.CityResponse
-import com.sanoma.cda.geo._
+import com.tgf.pizza.geo._
 
 /**
  * Case class to hold the location information from MaxMind.

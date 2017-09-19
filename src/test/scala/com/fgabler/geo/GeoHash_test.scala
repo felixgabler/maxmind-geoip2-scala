@@ -9,13 +9,13 @@
  * software distributed under the Apache License Version 2.0 is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the Apache License Version 2.0 for the specific language governing permissions and limitations there under.
- */package com.sanoma.cda.geo
+ */package com.tgf.pizza.geo
 
 import org.scalatest.FunSuite
 import org.scalatest.prop.PropertyChecks
 import org.scalatest.Matchers._
 
-import com.sanoma.cda.geo.GeoHash._
+import com.tgf.pizza.geo.GeoHash._
 
 class GeoHash_test extends FunSuite with PropertyChecks {
   // let's create some test hashes

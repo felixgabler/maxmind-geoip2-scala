@@ -15,7 +15,7 @@ I suggest that you clone this repository and publish to local repository to be u
 
 After that, you can use it in your sbt by adding the following dependency:
 
-`libraryDependencies += "com.sanoma.cda" %% "maxmind-geoip2-scala" % "1.5.4"`
+`libraryDependencies += "com.tgf.pizza" %% "maxmind-geoip2-scala" % "1.5.4"`
 
 You should also be able to generate a fat jar with Assembly.
 We chose not to include the data file into the jar as you should update that from time to time.
@@ -38,7 +38,7 @@ Usage
 Here is a simple usage example:
 
 ```scala
-import com.sanoma.cda.geoip.MaxMindIpGeo
+import com.tgf.pizza.geoip.MaxMindIpGeo
 val geoIp = MaxMindIpGeo("/data/MaxMind/GeoLite2-City.mmdb", 1000)
 println(geoIp.getLocation("123.123.123.123"))
 ```
@@ -53,9 +53,9 @@ If you know that the MaxMind Lite database has some problems in the areas that y
 NOTE: this API changed a little since 1.4.x - now you can define function that transforms the IpLocation to new one or none.
 
 ```scala
-import com.sanoma.cda.geoip.MaxMindIpGeo
-import com.sanoma.cda.geo.Point
-import com.sanoma.cda.geoip.IpLocation
+import com.tgf.pizza.geoip.MaxMindIpGeo
+import com.tgf.pizza.geo.Point
+import com.tgf.pizza.geoip.IpLocation
 val removeIncorrectLatLong: MaxMindIpGeo.IpLocationFilter = loc => {
   val geoPointBlacklist = Set(Point(39.9289,116.3883)) // we "know" this is never correct
   loc.geoPoint match {
@@ -89,7 +89,7 @@ The GeoAreaMap is designed to hold the different geo areas, such as the circles,
 Here is an example of doing lookup using GeoAreaMap
 
 ```scala
-import com.sanoma.cda.geo._
+import com.tgf.pizza.geo._
 val turku = Point(60.45, 22.25)
 val helsinki = Point(60.17, 24.94)
 val tamminiemi = Point(60.1892,24.8838)
@@ -114,12 +114,12 @@ Geo-package now contains also basic Geohash encoding and decoding. For more info
 
 This is how you can use the geohashing functions
 ```scala
-import com.sanoma.cda.geo._
+import com.tgf.pizza.geo._
 Point(45.0,88.0).geoHash          // "tzyxfrzxuxgz"
 Point(45.0,88.0).geoHash(5)       // "tzyxf"
 Point.fromGeohash("tzyxfrzxu")    // Point(45.0,88.0)
 
-import com.sanoma.cda.geo.GeoHash._
+import com.tgf.pizza.geo.GeoHash._
 val p = Point(-53.876953125, -155.91796875)
 val h = encode(p)    // 0w3j7zzzzzzz
 val h6 = encode(p,6) // 0w3j7z
@@ -173,30 +173,30 @@ This package provides some tools to implement a system to degrade the spatial re
  * add gaussian noise with for example std of 1km to the accurate location
 
 ```scala
-import com.sanoma.cda.geo.GeoPrivacy._
-import com.sanoma.cda.geo.Point
+import com.tgf.pizza.geo.GeoPrivacy._
+import com.tgf.pizza.geo.Point
 
 val p1 = Point(1.234567, 3.4567890)
 
 discretize(2)(p1)
-//res0: com.sanoma.cda.geo.Point = Point(1.23,3.46)
+//res0: com.tgf.pizza.geo.Point = Point(1.23,3.46)
 
 discretizeWithGeoHash(4)(p1)
-//res1: com.sanoma.cda.geo.Point = Point(1.3,3.3)
+//res1: com.tgf.pizza.geo.Point = Point(1.3,3.3)
 
 val p2 = Point(1.2, 3.4)
 
 additiveUniformNoise(0.1, 0.1)(p2)
-//res2: com.sanoma.cda.geo.Point = Point(1.2785796832525629,3.497788928956041)
+//res2: com.tgf.pizza.geo.Point = Point(1.2785796832525629,3.497788928956041)
 
 additiveGaussianNoise(0.1)(p2)
-//res3: com.sanoma.cda.geo.Point = Point(1.1332416627810706,3.3081027046796434)
+//res3: com.tgf.pizza.geo.Point = Point(1.1332416627810706,3.3081027046796434)
 
 additiveUniformNoiseMeters(1000, 1000)(p2)
-//res4: com.sanoma.cda.geo.Point = Point(1.1947079935372003,3.3969605065141217)
+//res4: com.tgf.pizza.geo.Point = Point(1.1947079935372003,3.3969605065141217)
 
 additiveGaussianNoiseMeters(1000)(p2)
-//res5: com.sanoma.cda.geo.Point = Point(1.1945165899260433,3.3888928371192066)
+//res5: com.tgf.pizza.geo.Point = Point(1.1945165899260433,3.3888928371192066)
 ```
 
 There is also k-anonymity function. There you would return the smallest geohash that contains at least k-people in it. This is not implemented yet here.
@@ -211,16 +211,16 @@ THe coordinate conversions are not fully integrated into the rest of the library
 
 This is how you do the coordinate conversions:
 ```scala
-import com.sanoma.cda.geo.Point
-import com.sanoma.cda.geo.CoordinateConversions._
+import com.tgf.pizza.geo.Point
+import com.tgf.pizza.geo.CoordinateConversions._
 
 val GPS = Point(60.1672065,24.943796)
-// GPS: com.sanoma.cda.geo.Point = Point(60.1672065,24.943796)
+// GPS: com.tgf.pizza.geo.Point = Point(60.1672065,24.943796)
 
 val EUREF_FIN = wgs842etrs89tm35fin(GPS)
 // EUREF_FIN: (Double, Double) = (6671809.459860587,385901.3059246596)
 
 etrs89tm35fin2wgs84(EUREF_FIN)
-// res0: com.sanoma.cda.geo.Point = Point(60.16720650000114,24.943796000000106)
+// res0: com.tgf.pizza.geo.Point = Point(60.16720650000114,24.943796000000106)
 ```
  
