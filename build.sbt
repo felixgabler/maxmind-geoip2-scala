@@ -1,12 +1,12 @@
 lazy val packageInfo = Seq(
   organization := "com.tgf.pizza",
   name := "maxmind-geoip2-scala",
-  version := "1.5.5"
+  version := "1.5.6"
 )
 
 lazy val scalaVersions = Seq(
-  scalaVersion := "2.11.8",
-  crossScalaVersions := Seq("2.10.6", "2.11.8", "2.12.3")
+  scalaVersion := "2.12.4",
+  crossScalaVersions := Seq("2.10.6", "2.11.11", "2.12.4")
 )
 
 val commonBuildLibs = Seq(
